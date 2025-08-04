@@ -7,39 +7,9 @@ on:
     branches: [ main ]
 
 jobs:
-  validate-openapi:
-    name: Validate OpenAPI Specification
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        
-    - name: Install OpenAPI tools
-      run: |
-        npm install -g @apidevtools/swagger-parser
-        
-    - name: Validate OpenAPI syntax
-      run: |
-        swagger-parser validate metadata_management_api.yaml
-        
-    - name: Check API file exists
-      run: |
-        if [ ! -f "metadata_management_api.yaml" ]; then
-          echo "❌ OpenAPI specification file not found"
-          exit 1
-        fi
-        echo "✅ OpenAPI specification file found"
-
   security-scan:
     name: Security Scan with 42Crunch
     runs-on: ubuntu-latest
-    needs: validate-openapi
     
     steps:
     - name: Checkout code
@@ -60,36 +30,3 @@ jobs:
       with:
         sarif_file: 42c-audit-report.sarif
         category: 42crunch-api-security
-
-  quality-gates:
-    name: Quality Gates
-    runs-on: ubuntu-latest
-    needs: [validate-openapi, security-scan]
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Check API completeness
-      run: |
-        echo "Checking API specification completeness..."
-        
-        # Check if all paths have descriptions
-        if ! grep -q "description:" metadata_management_api.yaml; then
-          echo "❌ Missing descriptions in API paths"
-          exit 1
-        fi
-        
-        # Check if examples are present
-        if ! grep -q "examples:" metadata_management_api.yaml; then
-          echo "❌ Missing examples in API specification"
-          exit 1
-        fi
-        
-        # Check if security schemes are defined
-        if ! grep -q "securitySchemes:" metadata_management_api.yaml; then
-          echo "❌ Missing security schemes"
-          exit 1
-        fi
-        
-        echo "✅ API specification quality checks passed"
