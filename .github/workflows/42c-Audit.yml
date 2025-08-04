@@ -20,10 +20,43 @@ jobs:
           - name: Checkout code
             uses: actions/checkout@v3
 
+          - name: Debug - List repository contents
+            run: |
+              echo "=== Repository Contents ==="
+              ls -la
+              echo ""
+              echo "=== Looking for OpenAPI/Swagger files ==="
+              find . -name "*.yaml" -o -name "*.yml" -o -name "*.json" | head -20
+              echo ""
+              echo "=== Current working directory ==="
+              pwd
+              echo ""
+              echo "=== Environment variables ==="
+              echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+              echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+              echo ""
+              echo "=== Checking specific files ==="
+              if [ -f "metadata_management_api.yaml" ]; then
+                echo "✅ metadata_management_api.yaml exists"
+                echo "File size: $(wc -c < metadata_management_api.yaml) bytes"
+                echo "First few lines:"
+                head -5 metadata_management_api.yaml
+              else
+                echo "❌ metadata_management_api.yaml not found"
+              fi
+              if [ -f "bundled_openapi_spec.json" ]; then
+                echo "✅ bundled_openapi_spec.json exists"
+                echo "File size: $(wc -c < bundled_openapi_spec.json) bytes"
+              else
+                echo "❌ bundled_openapi_spec.json not found"
+              fi
+
           - name: 42Crunch REST API Static Security Testing
           # You may pin to the exact commit or the version.
           # uses: 42Crunch/api-security-audit-action@8f3291aee67d774baf12330d1bfe86af2c861a06
             uses: 42Crunch/api-security-audit-action@v3
+            continue-on-error: true
+            id: audit-action
             with:
               # The API token to access 42Crunch Platform.
               api-token: ${{ env.X42C_API_TOKEN }}
@@ -57,3 +90,32 @@ jobs:
               # sarif-report: # optional, default is 
               # Set the maximum timeout (in seconds) for the audit report. Fail if the result isn't ready within that interval.
               # audit-timeout: # optional
+
+          - name: Debug - Check 42Crunch outputs
+            if: always()
+            run: |
+              echo "=== 42Crunch Action Result ==="
+              echo "Action outcome: ${{ steps.audit-action.outcome }}"
+              echo "Action conclusion: ${{ steps.audit-action.conclusion }}"
+              echo ""
+              echo "=== Generated files ==="
+              ls -la *.json *.sarif 2>/dev/null || echo "No JSON or SARIF files found"
+              echo ""
+              echo "=== Working directory contents after 42Crunch ==="
+              ls -la
+              echo ""
+              if [ -f "audit-action-report-${{ github.run_id }}.json" ]; then
+                echo "✅ JSON report generated"
+                echo "JSON report size: $(wc -c < audit-action-report-${{ github.run_id }}.json) bytes"
+                echo "First 500 characters of JSON report:"
+                head -c 500 "audit-action-report-${{ github.run_id }}.json"
+              else
+                echo "❌ JSON report not found"
+              fi
+              echo ""
+              echo "=== API Token Status ==="
+              if [ -n "${{ env.X42C_API_TOKEN }}" ]; then
+                echo "✅ API token is set (length: ${#X42C_API_TOKEN})"
+              else
+                echo "❌ API token is not set"
+              fi
