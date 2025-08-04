@@ -47,7 +47,6 @@ The API uses OAuth 2.0 Client Credentials flow with the following scopes:
 
 This repository includes GitHub Actions workflows for:
 - OpenAPI specification validation
-- Security scanning with 42Crunch
 - Automated quality gates
 
 ## Contributing
