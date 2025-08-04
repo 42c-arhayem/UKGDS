@@ -1,7 +1,7 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.0",
   "info": {
-    "title": "Data Catalogue Metadata API",
+    "title": "Data Catalogue Metadata API Fixed",
     "description": "This API allows you to search, create, update and delete metadata records about data assets published in any data catalogue that implements the [data-catalogue-metadata JSON schema](https://co-cddo.github.io/data-catalogue-metadata/schema).\n\nThis JSON schema is based on the [Data Catalog Vocabulary (DCAT) - Version 3](https://www.w3.org/TR/vocab-dcat-3/).\n\nAn example of a data catalogue implementing this schema is the [CDDO Data Marketplace](https://datamarketplace.gov.uk).\n",
     "version": "3.1.2",
     "contact": {
