@@ -40,7 +40,7 @@ jobs:
               # Set the root directory for the plugin
               # root-directory: # optional
               # Change the default collection name
-              # default-collection-name: # optional
+              default-collection-name: UK GDS PoC APIs
               # Writes Audit report in JSON format to a specified file
               # json-report: # optional
               # List of tags to be set on the newly created APIs. Format "category1:name1 category2:name2", optional.
