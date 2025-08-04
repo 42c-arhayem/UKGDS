@@ -26,7 +26,7 @@ jobs:
               # Minimum score for OpenAPI files.
               # min-score: # optional, default is 75
               # 42Crunch platform URL
-              platform-url: https://trials.42crunch.com
+              platform-url: "https://trials.42crunch.com"
               # Log level, one of: FATAL, ERROR, WARN, INFO, DEBUG
               log-level: DEBUG
               # Share new API collections with everyone, one of: OFF, READ_ONLY, READ_WRITE
@@ -40,7 +40,7 @@ jobs:
               # Set the root directory for the plugin
               # root-directory: # optional
               # Change the default collection name
-              default-collection-name: UK GDS PoC APIs
+              default-collection-name: "UK GDS PoC APIs"
               # Writes Audit report in JSON format to a specified file
               # json-report: # optional
               # List of tags to be set on the newly created APIs. Format "category1:name1 category2:name2", optional.
@@ -53,4 +53,3 @@ jobs:
               # sarif-report: # optional, default is 
               # Set the maximum timeout (in seconds) for the audit report. Fail if the result isn't ready within that interval.
               # audit-timeout: # optional
-          
