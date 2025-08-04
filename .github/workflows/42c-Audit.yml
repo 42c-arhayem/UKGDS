@@ -22,7 +22,7 @@ jobs:
             uses: 42Crunch/api-security-audit-action@v4
             with:
               # The API token to access 42Crunch Platform. Follow hese steps to configure API_TOKEN https://docs.42crunch.com/latest/content/tasks/integrate_github_actions.htm
-              api-token: ${{ secrets.API_TOKEN }}
+              api-token: ${{ secrets.API_KEY }}
               # Minimum score for OpenAPI files.
               # min-score: # optional, default is 75
               # 42Crunch platform URL
