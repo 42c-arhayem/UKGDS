@@ -19,14 +19,14 @@ jobs:
           - name: 42Crunch REST API Static Security Testing
             # You may pin to the exact commit or the version.
             # uses: 42Crunch/api-security-audit-action@5c859ccd8c90dd4601acc694b5da6374e2c7a3c2
-            uses: 42Crunch/api-security-audit-action@v3
+            uses: 42Crunch/api-security-audit-action@v4
             with:
               # The API token to access 42Crunch Platform. Follow hese steps to configure API_TOKEN https://docs.42crunch.com/latest/content/tasks/integrate_github_actions.htm
               api-token: ${{ secrets.API_KEY }}
               # Minimum score for OpenAPI files.
               # min-score: # optional, default is 75
               # 42Crunch platform URL
-              platform-url: https://trials.42crunch.com
+              platform-url: "https://trials.42crunch.com"
               # Log level, one of: FATAL, ERROR, WARN, INFO, DEBUG
               log-level: DEBUG
               # Share new API collections with everyone, one of: OFF, READ_ONLY, READ_WRITE
@@ -40,11 +40,11 @@ jobs:
               # Set the root directory for the plugin
               # root-directory: # optional
               # Change the default collection name
-              default-collection-name: UK GDS PoC APIs
+              default-collection-name: "UK GDS PoC APIs"
               # Writes Audit report in JSON format to a specified file
               # json-report: # optional
               # List of tags to be set on the newly created APIs. Format "category1:name1 category2:name2", optional.
-              api-tags: SecurityQualityGatesTags:API_Catalogue
+              api-tags: "SecurityQualityGatesTags:API_Catalogue"
               # If set to 'true', forces to complete execution successfully even if a network error has occurred (such as a failure to connect to 4unch Platform, etc).
               # ignore-network-errors: # optional, default is false
               # If set to 'true', forces to complete execution successfully even if the failures conditions (like min-score or SQG criteria) you have set are met.
