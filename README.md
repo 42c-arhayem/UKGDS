@@ -12,7 +12,7 @@ An example of a data catalogue implementing this schema is the [CDDO Data Market
 
 ## Files
 
-- `metadata_management_api.yaml` - Main OpenAPI 3.0.0 specification
+- `metadata_management_api.yaml` - Main OpenAPI 3.0.0 specification (discarded due to validation issue)
 - `bundled_openapi_spec.json` - Bundled JSON version of the specification
 
 ## API Features
